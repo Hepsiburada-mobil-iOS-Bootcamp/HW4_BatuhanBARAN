@@ -16,6 +16,7 @@
 		D8254B512714BD330039FB54 /* HW4_BatuhanBaranTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8254B502714BD330039FB54 /* HW4_BatuhanBaranTests.swift */; };
 		D8254B5B2714BD330039FB54 /* HW4_BatuhanBaranUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8254B5A2714BD330039FB54 /* HW4_BatuhanBaranUITests.swift */; };
 		D8254B5D2714BD330039FB54 /* HW4_BatuhanBaranUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8254B5C2714BD330039FB54 /* HW4_BatuhanBaranUITestsLaunchTests.swift */; };
+		D8C3269E2714D32E007D5BA7 /* DefaultNetworkOperationPackage in Frameworks */ = {isa = PBXBuildFile; productRef = D8C3269D2714D32E007D5BA7 /* DefaultNetworkOperationPackage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		D8254B562714BD330039FB54 /* HW4_BatuhanBaranUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HW4_BatuhanBaranUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8254B5A2714BD330039FB54 /* HW4_BatuhanBaranUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HW4_BatuhanBaranUITests.swift; sourceTree = "<group>"; };
 		D8254B5C2714BD330039FB54 /* HW4_BatuhanBaranUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HW4_BatuhanBaranUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D8C3269B2714D30B007D5BA7 /* DefaultNetworkOperationPackage */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DefaultNetworkOperationPackage; path = ../../../../Downloads/DefaultNetworkOperationPackage; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8C3269E2714D32E007D5BA7 /* DefaultNetworkOperationPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +86,7 @@
 				D8254B4F2714BD330039FB54 /* HW4_BatuhanBaranTests */,
 				D8254B592714BD330039FB54 /* HW4_BatuhanBaranUITests */,
 				D8254B372714BD320039FB54 /* Products */,
+				D8C3269C2714D32E007D5BA7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +103,7 @@
 		D8254B382714BD320039FB54 /* HW4_BatuhanBaran */ = {
 			isa = PBXGroup;
 			children = (
+				D8C3269B2714D30B007D5BA7 /* DefaultNetworkOperationPackage */,
 				D8254B392714BD320039FB54 /* AppDelegate.swift */,
 				D8254B3B2714BD320039FB54 /* SceneDelegate.swift */,
 				D8254B3D2714BD320039FB54 /* ViewController.swift */,
@@ -127,6 +132,13 @@
 			path = HW4_BatuhanBaranUITests;
 			sourceTree = "<group>";
 		};
+		D8C3269C2714D32E007D5BA7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +155,9 @@
 			dependencies = (
 			);
 			name = HW4_BatuhanBaran;
+			packageProductDependencies = (
+				D8C3269D2714D32E007D5BA7 /* DefaultNetworkOperationPackage */,
+			);
 			productName = HW4_BatuhanBaran;
 			productReference = D8254B362714BD320039FB54 /* HW4_BatuhanBaran.app */;
 			productType = "com.apple.product-type.application";
@@ -624,6 +639,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D8C3269D2714D32E007D5BA7 /* DefaultNetworkOperationPackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DefaultNetworkOperationPackage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D8254B2E2714BD310039FB54 /* Project object */;
 }
