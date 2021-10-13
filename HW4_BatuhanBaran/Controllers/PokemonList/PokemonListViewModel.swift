@@ -23,15 +23,14 @@ final class PokemonListViewModel {
             case .success(let response):
                 guard let pokemons = response.results else { break }
                 self?.pokemons = pokemons
-                self?.fetchPokemonSprites()
             case .failure(let error):
                 print(error)
             }
         }
     }
     
-    func fetchPokemonSprites() {
-
+    func fetchPokemonSprites(with pokemonName: String) {
+        print(pokemonName)
     }
 }
 
@@ -47,5 +46,9 @@ extension PokemonListViewModel: ItemListProtocol {
     
     func askData(at index: Int) -> GenericDataProtocol? {
         return ItemTableViewCellData(pokemonName: self.pokemons[index]?.name?.capitalizingFirstLetter() ?? "")
+    }
+    
+    func selectedData(at index: Int) {
+        fetchPokemonSprites(with: self.pokemons[index]?.name ?? "")
     }
 }
