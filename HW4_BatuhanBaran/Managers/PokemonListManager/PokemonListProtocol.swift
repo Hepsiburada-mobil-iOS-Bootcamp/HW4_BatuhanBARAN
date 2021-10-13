@@ -16,5 +16,4 @@ protocol PokemonListProtocol {
 //    private(set) var limit: String { set }
     
     func fetchPokemons(offset: Int, limit: Int, completion: @escaping (PokemonListResult) -> Void)
-    func fetchPokemonSprites(url: String, completion: @escaping (Sprites?) -> Void)
 }

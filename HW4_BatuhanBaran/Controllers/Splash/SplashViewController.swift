@@ -35,7 +35,8 @@ extension SplashViewController: LottieViewOutputDelegate {
     func navigateToPokemonList() {
         var pokemonListVC = BaseBuilder<PokemonListViewController>().build(with: .fullScreen)
         let manager = PokemonListManager()
-        pokemonListVC = PokemonListViewController(viewModel: PokemonListViewModel(manager: manager))
+        let spriteManager = PokemonSpritesManager()
+        pokemonListVC = PokemonListViewController(viewModel: PokemonListViewModel(manager: manager, spriteManager: spriteManager))
         let navigationViewController = UINavigationController(rootViewController: pokemonListVC)
         navigationViewController.modalPresentationStyle = .fullScreen
         self.present(navigationViewController, animated: false)

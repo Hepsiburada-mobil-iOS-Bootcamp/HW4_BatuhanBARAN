@@ -15,4 +15,7 @@ class PokemonDetailViewController: UIViewController {
         view.backgroundColor = .blue
     }
 
+    init(selectedPokemon: Pokemon) {
+        <#statements#>
+    }
 }

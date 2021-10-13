@@ -28,6 +28,7 @@ class PokemonListViewController: BaseViewController<PokemonListViewModel> {
         mainComponent.translatesAutoresizingMaskIntoConstraints = false
         
         mainComponent.delegate = viewModel
+        viewModel.delegate = self
         
         view.addSubview(mainComponent)
         
@@ -43,5 +44,13 @@ class PokemonListViewController: BaseViewController<PokemonListViewModel> {
     
     func fetchPokemons() {
         viewModel.fetchPokemons()
+    }
+}
+
+extension PokemonListViewController: PokemonListViewModelOutputDelegate {
+    func navigateToPokemonDetail(with pokemonName: String) {
+        let pokemonDetailVC = PokemonDetailViewController()
+        pokemonDetailVC.title = pokemonName.capitalizingFirstLetter()
+        self.navigationController?.pushViewController(pokemonDetailVC, animated: true)
     }
 }

@@ -8,13 +8,22 @@
 import Foundation
 import UIKit
 
+protocol PokemonListViewModelOutputDelegate: AnyObject {
+    func navigateToPokemonDetail(with pokemonName: String)
+}
+
 final class PokemonListViewModel {
 
     private let manager: PokemonListProtocol
+    private let spriteManager: PokemonSpritesManager
     var pokemons = [Pokemon?]()
     
-    init(manager: PokemonListProtocol) {
+    weak var delegate: PokemonListViewModelOutputDelegate?
+    
+    init(manager: PokemonListProtocol,
+         spriteManager: PokemonSpritesManager) {
         self.manager = manager
+        self.spriteManager = spriteManager
     }
     
     func fetchPokemons() {
@@ -30,7 +39,7 @@ final class PokemonListViewModel {
     }
     
     func fetchPokemonSprites(with pokemonName: String) {
-        print(pokemonName)
+        delegate?.navigateToPokemonDetail(with: pokemonName)
     }
 }
 
