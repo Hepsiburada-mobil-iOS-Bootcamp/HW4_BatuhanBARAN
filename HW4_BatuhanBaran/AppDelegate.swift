@@ -23,13 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        
-        var pokemonListVC = BaseBuilder<PokemonListViewController>().build(with: .fullScreen)
-        let manager = PokemonListManager()
-        pokemonListVC = PokemonListViewController(viewModel: PokemonListViewModel(manager: manager))
-        let navigationViewController = UINavigationController(rootViewController: pokemonListVC)
-        
-        window?.rootViewController = navigationViewController
+        window?.rootViewController = SplashViewController()
         
         return true
     }
