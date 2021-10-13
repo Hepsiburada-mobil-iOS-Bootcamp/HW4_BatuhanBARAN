@@ -9,21 +9,19 @@ import Foundation
 import UIKit
 
 protocol PokemonListViewModelOutputDelegate: AnyObject {
-    func navigateToPokemonDetail(with pokemonName: String)
+    func navigateToPokemonDetail(with selectedPokemon: Pokemon)
 }
 
 final class PokemonListViewModel {
 
     private let manager: PokemonListProtocol
-    private let spriteManager: PokemonSpritesManager
+    
     var pokemons = [Pokemon?]()
     
     weak var delegate: PokemonListViewModelOutputDelegate?
     
-    init(manager: PokemonListProtocol,
-         spriteManager: PokemonSpritesManager) {
+    init(manager: PokemonListProtocol) {
         self.manager = manager
-        self.spriteManager = spriteManager
     }
     
     func fetchPokemons() {
@@ -38,8 +36,8 @@ final class PokemonListViewModel {
         }
     }
     
-    func fetchPokemonSprites(with pokemonName: String) {
-        delegate?.navigateToPokemonDetail(with: pokemonName)
+    func navigateToPokemonDetail(with selectedPokemon: Pokemon) {
+        delegate?.navigateToPokemonDetail(with: selectedPokemon)
     }
 }
 
@@ -58,6 +56,6 @@ extension PokemonListViewModel: ItemListProtocol {
     }
     
     func selectedData(at index: Int) {
-        fetchPokemonSprites(with: self.pokemons[index]?.name ?? "")
+        navigateToPokemonDetail(with: self.pokemons[index] ?? Pokemon(name: "", url: ""))
     }
 }

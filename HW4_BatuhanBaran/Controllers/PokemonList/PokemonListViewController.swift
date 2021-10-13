@@ -14,7 +14,7 @@ class PokemonListViewController: BaseViewController<PokemonListViewModel> {
     override func prepareViewControllerConfigurations() {
         super.prepareViewControllerConfigurations()
         
-        self.title = "Welcome" 
+        self.title = "Welcome"
         addmainComponent()
         fetchPokemons()
         
@@ -48,9 +48,11 @@ class PokemonListViewController: BaseViewController<PokemonListViewModel> {
 }
 
 extension PokemonListViewController: PokemonListViewModelOutputDelegate {
-    func navigateToPokemonDetail(with pokemonName: String) {
-        let pokemonDetailVC = PokemonDetailViewController()
-        pokemonDetailVC.title = pokemonName.capitalizingFirstLetter()
+    func navigateToPokemonDetail(with selectedPokemon: Pokemon) {
+        let spriteManager = PokemonSpritesManager()
+        let pokemonDetailViewModel = PokemonDetailViewModel(selectedPokemon: selectedPokemon, spriteManager: spriteManager)
+        let pokemonDetailVC = PokemonDetailViewController(viewModel: pokemonDetailViewModel)
+        pokemonDetailVC.title = selectedPokemon.name?.capitalizingFirstLetter() ?? ""
         self.navigationController?.pushViewController(pokemonDetailVC, animated: true)
     }
 }

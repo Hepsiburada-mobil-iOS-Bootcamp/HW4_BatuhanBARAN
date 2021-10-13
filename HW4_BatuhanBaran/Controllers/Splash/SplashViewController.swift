@@ -13,7 +13,11 @@ class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        addLottieView()
+    }
+    
+    private func addLottieView() {
         lottieView = LottieView()
         lottieView.delegate = self
         lottieView.translatesAutoresizingMaskIntoConstraints = false
@@ -35,8 +39,7 @@ extension SplashViewController: LottieViewOutputDelegate {
     func navigateToPokemonList() {
         var pokemonListVC = BaseBuilder<PokemonListViewController>().build(with: .fullScreen)
         let manager = PokemonListManager()
-        let spriteManager = PokemonSpritesManager()
-        pokemonListVC = PokemonListViewController(viewModel: PokemonListViewModel(manager: manager, spriteManager: spriteManager))
+        pokemonListVC = PokemonListViewController(viewModel: PokemonListViewModel(manager: manager))
         let navigationViewController = UINavigationController(rootViewController: pokemonListVC)
         navigationViewController.modalPresentationStyle = .fullScreen
         self.present(navigationViewController, animated: false)
