@@ -9,81 +9,26 @@ import UIKit
 
 class PokemonDetailViewController: BaseViewController<PokemonDetailViewModel> {
     
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        //scrollView.backgroundColor = .red
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = false
-        return scrollView
-    }()
-    
-    private lazy var contentView: UIView = {
-        let contentView = UIView()
-        //contentView.backgroundColor = .green
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        return contentView
-    }()
-    
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.spacing = 16
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
-    private lazy var mainStackView: UIStackView = {
-        let temp = UIStackView(arrangedSubviews: [idLabel, weightLabel, heightLabel])
-        temp.translatesAutoresizingMaskIntoConstraints = false
-        temp.distribution = .fillEqually
-        temp.axis = .vertical
-        temp.spacing = 10
-        return temp
-    }()
-    
-    private lazy var idLabel: UILabel = {
-        let temp = UILabel()
-        temp.translatesAutoresizingMaskIntoConstraints = false
-        temp.textColor = .black
-        temp.textAlignment = .left
-        temp.font = FontManager.bold(18).value
-        return temp
-    }()
-    
-    private lazy var weightLabel: UILabel = {
-        let temp = UILabel()
-        temp.translatesAutoresizingMaskIntoConstraints = false
-        temp.textColor = .black
-        temp.textAlignment = .left
-        temp.font = FontManager.bold(18).value
-        return temp
-    }()
-    
-    private lazy var heightLabel: UILabel = {
-        let temp = UILabel()
-        temp.translatesAutoresizingMaskIntoConstraints = false
-        temp.textColor = .black
-        temp.textAlignment = .left
-        temp.font = FontManager.bold(18).value
-        return temp
-    }()
-    
     private lazy var collectionView: UICollectionView = {
         let collectionViewLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
+    
         collectionViewLayout.minimumInteritemSpacing = 30
         collectionViewLayout.minimumLineSpacing = 30
-        collectionView.register(PokemonSpritesCollectionViewCell.self, forCellWithReuseIdentifier: PokemonSpritesCollectionViewCell.identifier)
-        collectionView.isScrollEnabled = false
         collectionView.showsVerticalScrollIndicator = false
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+
+        collectionView.register(PokemonSpritesCollectionViewCell.self, forCellWithReuseIdentifier: PokemonSpritesCollectionViewCell.identifier)
+        collectionView.register(HeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionReusableView.identifier)
+
         return collectionView
     }()
     
     var spriteUrls = [String]()
+    var sprites: Sprites?
     
     override func prepareViewControllerConfigurations() {
         super.prepareViewControllerConfigurations()
@@ -92,10 +37,7 @@ class PokemonDetailViewController: BaseViewController<PokemonDetailViewModel> {
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 guard let data = data else { return }
-                self.idLabel.text = "Id: " + String(data.id ?? 0)
-                self.weightLabel.text = "Weight: " + String(data.weight ?? 0)
-                self.heightLabel.text = "Height: " + String(data.height ?? 0)
-                
+                self.sprites = data
                 self.spriteUrls.append(data.sprites?.back_default ?? "")
                 self.spriteUrls.append(data.sprites?.back_shiny ?? "")
                 self.spriteUrls.append(data.sprites?.back_female ?? "")
@@ -104,61 +46,20 @@ class PokemonDetailViewController: BaseViewController<PokemonDetailViewModel> {
                 self.spriteUrls.append(data.sprites?.front_shiny ?? "")
                 self.spriteUrls.append(data.sprites?.front_shiny_female ?? "")
                 self.spriteUrls = self.spriteUrls.filter({ $0 != ""})
-                
-                self.configureSubviews()
-                self.setupConstraints()
             }
         }
     }
     
-    private func configureSubviews() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        contentView.addSubview(stackView)
-        stackView.addArrangedSubview(mainStackView)
-        stackView.addArrangedSubview(collectionView)
-        
+    private func configureCollectionView() {
+        view.addSubview(collectionView)
         NSLayoutConstraint.activate([
-            idLabel.heightAnchor.constraint(equalToConstant: 50),
-            weightLabel.heightAnchor.constraint(equalToConstant: 50),
-            heightLabel.heightAnchor.constraint(equalToConstant: 50),
-            
-            collectionView.heightAnchor.constraint(equalToConstant: CGFloat(spriteUrls.count * 100)),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12)
         ])
         
         self.collectionView.reloadData()
-    }
-    
-    private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8)
-        ])
-        
-        NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
-        ])
-        
-        for view in stackView.arrangedSubviews {
-            NSLayoutConstraint.activate([
-                // todo asking
-                view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
-            ])
-        }
     }
 }
 
@@ -180,6 +81,16 @@ extension PokemonDetailViewController: UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
+        return UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionReusableView.identifier, for: indexPath) as? HeaderCollectionReusableView else { return UICollectionReusableView() }
+        header.prepareReuseableView(with: sprites)
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 210)
     }
 }
