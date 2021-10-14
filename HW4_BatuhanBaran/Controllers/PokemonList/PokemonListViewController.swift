@@ -14,13 +14,9 @@ class PokemonListViewController: BaseViewController<PokemonListViewModel> {
     override func prepareViewControllerConfigurations() {
         super.prepareViewControllerConfigurations()
         
-        self.title = "Welcome" 
+        self.title = "\(viewModel.pokemons.count) pokemon in \(viewModel.totalCount)"
         addmainComponent()
         fetchPokemons()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-            self.mainComponent.reloadTableView()
-        }
     }
     
     private func addmainComponent() {
@@ -28,6 +24,7 @@ class PokemonListViewController: BaseViewController<PokemonListViewModel> {
         mainComponent.translatesAutoresizingMaskIntoConstraints = false
         
         mainComponent.delegate = viewModel
+        viewModel.delegate = self
         
         view.addSubview(mainComponent)
         
@@ -43,5 +40,23 @@ class PokemonListViewController: BaseViewController<PokemonListViewModel> {
     
     func fetchPokemons() {
         viewModel.fetchPokemons()
+        self.mainComponent.reloadTableView()
+    }
+}
+
+extension PokemonListViewController: PokemonListViewModelOutputDelegate {
+    func navigateToPokemonDetail(with selectedPokemon: Pokemon) {
+        let spriteManager = PokemonSpritesManager()
+        let pokemonDetailViewModel = PokemonDetailViewModel(selectedPokemon: selectedPokemon, spriteManager: spriteManager)
+        let pokemonDetailVC = PokemonDetailViewController(viewModel: pokemonDetailViewModel)
+        pokemonDetailVC.title = selectedPokemon.name?.capitalizingFirstLetter() ?? ""
+        self.navigationController?.pushViewController(pokemonDetailVC, animated: true)
+    }
+    
+    func hasMoreLoaded() {
+        DispatchQueue.main.async {
+            self.mainComponent.reloadTableView()
+            self.title = "\(self.viewModel.pokemons.count) pokemon in \(self.viewModel.totalCount)"
+        }
     }
 }

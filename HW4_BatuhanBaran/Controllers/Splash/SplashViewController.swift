@@ -13,8 +13,14 @@ class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        lottieView = LottieView()
+        
+        view.backgroundColor = UIColor(red: 227 / 255, green: 52 / 255, blue: 47 / 255, alpha: 1)
+        addLottieView()
+    }
+    
+    private func addLottieView() {
+        lottieView = LottieView(frame: .zero, jsonName: "loading")
+        lottieView = lottieView.buildLottieView()
         lottieView.delegate = self
         lottieView.translatesAutoresizingMaskIntoConstraints = false
         
