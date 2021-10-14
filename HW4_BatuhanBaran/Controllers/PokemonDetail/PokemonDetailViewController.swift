@@ -46,6 +46,7 @@ class PokemonDetailViewController: BaseViewController<PokemonDetailViewModel> {
                 self.spriteUrls.append(data.sprites?.front_shiny ?? "")
                 self.spriteUrls.append(data.sprites?.front_shiny_female ?? "")
                 self.spriteUrls = self.spriteUrls.filter({ $0 != ""})
+                self.configureCollectionView()
             }
         }
     }

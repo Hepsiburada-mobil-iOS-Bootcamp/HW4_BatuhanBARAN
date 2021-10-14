@@ -19,7 +19,8 @@ class SplashViewController: UIViewController {
     }
     
     private func addLottieView() {
-        lottieView = LottieView()
+        lottieView = LottieView(frame: .zero, jsonName: "loading")
+        lottieView = lottieView.buildLottieView()
         lottieView.delegate = self
         lottieView.translatesAutoresizingMaskIntoConstraints = false
         
