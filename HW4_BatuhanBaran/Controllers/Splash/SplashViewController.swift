@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class SplashViewController: UIViewController {
 
     private var lottieView: LottieView!
@@ -19,7 +20,7 @@ class SplashViewController: UIViewController {
     }
     
     private func addLottieView() {
-        lottieView = LottieView(frame: .zero, jsonName: "loading")
+        lottieView = LottieView(frame: .zero, jsonName: "pokemon")
         lottieView = lottieView.buildLottieView()
         lottieView.delegate = self
         lottieView.translatesAutoresizingMaskIntoConstraints = false
@@ -34,6 +35,8 @@ class SplashViewController: UIViewController {
             lottieView.heightAnchor.constraint(equalToConstant: 240),
             
         ])
+        
+        lottieView.play()
     }
 }
 
