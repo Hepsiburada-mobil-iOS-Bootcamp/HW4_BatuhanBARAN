@@ -29,7 +29,6 @@ class PokemonSpritesCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "user")!
         return imageView
     }()
     
@@ -41,13 +40,15 @@ class PokemonSpritesCollectionViewCell: UICollectionViewCell {
         layer.shadowColor = UIColor.lightGray.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 2.0)
         layer.shadowRadius = 5.0
-        layer.shadowOpacity = 1.0
+        layer.shadowOpacity = 0.75
         layer.masksToBounds = false
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
         layer.backgroundColor = UIColor.clear.cgColor
 
         contentView.layer.masksToBounds = true
         layer.cornerRadius = 10
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.lightGray.cgColor
         
         NSLayoutConstraint.activate([
             

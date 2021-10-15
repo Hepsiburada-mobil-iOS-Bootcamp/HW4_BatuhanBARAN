@@ -14,12 +14,12 @@ class PokemonListViewController: BaseViewController<PokemonListViewModel> {
     override func prepareViewControllerConfigurations() {
         super.prepareViewControllerConfigurations()
         
-        self.title = "\(viewModel.pokemons.count) pokemon in \(viewModel.totalCount)"
-        addmainComponent()
+        addMainComponent()
         fetchPokemons()
+        subscribeViewModelProperties()
     }
     
-    private func addmainComponent() {
+    private func addMainComponent() {
         mainComponent = ItemListView()
         mainComponent.translatesAutoresizingMaskIntoConstraints = false
         
@@ -36,11 +36,43 @@ class PokemonListViewController: BaseViewController<PokemonListViewModel> {
             mainComponent.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             
         ])
+        
+        self.mainComponent.reloadTableView()
+    }
+    
+    private func subscribeViewModelProperties() {
+        viewModel.loadingStatus.observe { [weak self] loadingState in
+            guard let self = self else { return }
+            if loadingState == .loading {
+                DispatchQueue.main.async {
+                    self.view.alpha = 0.75
+                    self.lottieView.play()
+                }
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.view.alpha = 1
+                    self.lottieView.stop()
+                }
+                self.mainComponent.reloadTableView()
+            }
+        }
+        
+        viewModel.currentPokemonCount.observe { [weak self] count in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.title = "\(count) pokemons in \(self.viewModel.totalPokemonCount)"
+            }
+        }
     }
     
     func fetchPokemons() {
-        viewModel.fetchPokemons()
-        self.mainComponent.reloadTableView()
+        viewModel.fetchPokemons { [weak self] pokemon in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.title = "\(pokemon.count) pokemons in \(self.viewModel.totalPokemonCount)"
+                self.mainComponent.reloadTableView()
+            }
+        }
     }
 }
 
@@ -48,7 +80,7 @@ extension PokemonListViewController: PokemonListViewModelOutputDelegate {
     func navigateToPokemonDetail(with selectedPokemon: Pokemon) {
         let spriteManager = PokemonSpritesManager()
         let pokemonDetailViewModel = PokemonDetailViewModel(selectedPokemon: selectedPokemon, spriteManager: spriteManager)
-        let pokemonDetailVC = PokemonDetailViewController(viewModel: pokemonDetailViewModel)
+        let pokemonDetailVC = PokemonDetailViewController(viewModel: pokemonDetailViewModel, lottieName: "loading")
         pokemonDetailVC.title = selectedPokemon.name?.capitalizingFirstLetter() ?? ""
         self.navigationController?.pushViewController(pokemonDetailVC, animated: true)
     }
@@ -56,7 +88,7 @@ extension PokemonListViewController: PokemonListViewModelOutputDelegate {
     func hasMoreLoaded() {
         DispatchQueue.main.async {
             self.mainComponent.reloadTableView()
-            self.title = "\(self.viewModel.pokemons.count) pokemon in \(self.viewModel.totalCount)"
+            
         }
     }
 }
