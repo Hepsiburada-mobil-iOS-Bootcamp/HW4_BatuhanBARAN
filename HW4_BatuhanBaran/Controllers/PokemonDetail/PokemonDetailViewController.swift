@@ -32,12 +32,17 @@ class PokemonDetailViewController: BaseViewController<PokemonDetailViewModel> {
     
     override func prepareViewControllerConfigurations() {
         super.prepareViewControllerConfigurations()
-        
+        fetchSprites()
+        subscribeLoadingState()
+    }
+    
+    private func fetchSprites() {
         viewModel.fetchSprites { [weak self] data in
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 guard let data = data else { return }
                 self.sprites = data
+                
                 self.spriteUrls.append(data.sprites?.back_default ?? "")
                 self.spriteUrls.append(data.sprites?.back_shiny ?? "")
                 self.spriteUrls.append(data.sprites?.back_female ?? "")
@@ -46,7 +51,26 @@ class PokemonDetailViewController: BaseViewController<PokemonDetailViewModel> {
                 self.spriteUrls.append(data.sprites?.front_shiny ?? "")
                 self.spriteUrls.append(data.sprites?.front_shiny_female ?? "")
                 self.spriteUrls = self.spriteUrls.filter({ $0 != ""})
+                
                 self.configureCollectionView()
+            }
+        }
+    }
+    
+    private func subscribeLoadingState() {
+        viewModel.loadingStatus.observe { [weak self] loadingState in
+            guard let self = self else { return }
+            if loadingState == .loading {
+                DispatchQueue.main.async {
+                    // todo ask teacher
+                    self.collectionView.isHidden = true
+                    self.lottieView.play()
+                }
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.lottieView.stop()
+                    self.collectionView.isHidden = false
+                }
             }
         }
     }

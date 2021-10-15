@@ -22,8 +22,4 @@ struct Sprite: Codable {
     let front_default: String?
     let front_shiny: String?
     let front_shiny_female: String?
-    
-//    enum CodingKeys: CodingKey {
-//        case back_default
-//    }
 }

@@ -9,16 +9,14 @@ import UIKit
 
 class PokemonListViewController: BaseViewController<PokemonListViewModel> {
 
-    private var lottieView: LottieView!
     private var mainComponent: ItemListView!
     
     override func prepareViewControllerConfigurations() {
         super.prepareViewControllerConfigurations()
         
         addMainComponent()
-        addLottieView()
         fetchPokemons()
-        listenLoadingState()
+        subscribeViewModelProperties()
     }
     
     private func addMainComponent() {
@@ -38,30 +36,14 @@ class PokemonListViewController: BaseViewController<PokemonListViewModel> {
             mainComponent.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             
         ])
+        
         self.mainComponent.reloadTableView()
     }
     
-    private func addLottieView() {
-        lottieView = LottieView(frame: .zero, jsonName: "loading")
-        lottieView = lottieView.buildLottieView()
-        
-        lottieView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(lottieView)
-        
-        NSLayoutConstraint.activate([
-        
-            lottieView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            lottieView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            lottieView.widthAnchor.constraint(equalToConstant: 240),
-            lottieView.heightAnchor.constraint(equalToConstant: 240),
-            
-        ])
-    }
-    
-    private func listenLoadingState() {
-        viewModel.loadingStatus.observe { [weak self] state in
+    private func subscribeViewModelProperties() {
+        viewModel.loadingStatus.observe { [weak self] loadingState in
             guard let self = self else { return }
-            if state == .loading {
+            if loadingState == .loading {
                 DispatchQueue.main.async {
                     self.view.alpha = 0.75
                     self.lottieView.play()
@@ -74,14 +56,21 @@ class PokemonListViewController: BaseViewController<PokemonListViewModel> {
                 self.mainComponent.reloadTableView()
             }
         }
+        
+        viewModel.currentPokemonCount.observe { [weak self] count in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.title = "\(count) pokemons in \(self.viewModel.totalPokemonCount)"
+            }
+        }
     }
     
     func fetchPokemons() {
         viewModel.fetchPokemons { [weak self] pokemon in
             DispatchQueue.main.async {
                 guard let self = self else { return }
+                self.title = "\(pokemon.count) pokemons in \(self.viewModel.totalPokemonCount)"
                 self.mainComponent.reloadTableView()
-                self.title = "\(self.viewModel.pokemons.count) pokemon in \(self.viewModel.totalCount)"
             }
         }
     }
@@ -91,7 +80,7 @@ extension PokemonListViewController: PokemonListViewModelOutputDelegate {
     func navigateToPokemonDetail(with selectedPokemon: Pokemon) {
         let spriteManager = PokemonSpritesManager()
         let pokemonDetailViewModel = PokemonDetailViewModel(selectedPokemon: selectedPokemon, spriteManager: spriteManager)
-        let pokemonDetailVC = PokemonDetailViewController(viewModel: pokemonDetailViewModel)
+        let pokemonDetailVC = PokemonDetailViewController(viewModel: pokemonDetailViewModel, lottieName: "loading")
         pokemonDetailVC.title = selectedPokemon.name?.capitalizingFirstLetter() ?? ""
         self.navigationController?.pushViewController(pokemonDetailVC, animated: true)
     }
@@ -99,7 +88,7 @@ extension PokemonListViewController: PokemonListViewModelOutputDelegate {
     func hasMoreLoaded() {
         DispatchQueue.main.async {
             self.mainComponent.reloadTableView()
-            self.title = "\(self.viewModel.pokemons.count) pokemon in \(self.viewModel.totalCount)"
+            
         }
     }
 }

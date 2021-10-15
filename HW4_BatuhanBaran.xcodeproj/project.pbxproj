@@ -30,6 +30,7 @@
 		D8D61D022716CB0400519796 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D61D012716CB0400519796 /* LottieView.swift */; };
 		D8D61D052716CBC700519796 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = D8D61D042716CBC700519796 /* Lottie */; };
 		D8D61D082716CDD200519796 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D61D062716CDD200519796 /* SplashViewController.swift */; };
+		D8F2435A2719D07900C6EA5F /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F243592719D07900C6EA5F /* BaseViewModel.swift */; };
 		D8F4B5792715DFFE00287A9B /* PokemonResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F4B5782715DFFE00287A9B /* PokemonResult.swift */; };
 		D8F4B5862715E58900287A9B /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F4B57F2715E58900287A9B /* BaseView.swift */; };
 		D8F4B5872715E58900287A9B /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F4B5802715E58900287A9B /* BaseTableViewCell.swift */; };
@@ -98,6 +99,7 @@
 		D8D61CFF2716CAE200519796 /* pokemon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pokemon.json; sourceTree = "<group>"; };
 		D8D61D012716CB0400519796 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		D8D61D062716CDD200519796 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		D8F243592719D07900C6EA5F /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		D8F4B5782715DFFE00287A9B /* PokemonResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonResult.swift; sourceTree = "<group>"; };
 		D8F4B57F2715E58900287A9B /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		D8F4B5802715E58900287A9B /* BaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				D8F4B5832715E58900287A9B /* GenericBaseView.swift */,
 				D8F4B5852715E58900287A9B /* GenericDataProtocol.swift */,
 				D8F4B5822715E58900287A9B /* GenericValueProtocol.swift */,
+				D8F243592719D07900C6EA5F /* BaseViewModel.swift */,
 			);
 			path = BaseCompontents;
 			sourceTree = "<group>";
@@ -584,6 +587,7 @@
 				D8254B3A2714BD320039FB54 /* AppDelegate.swift in Sources */,
 				D8F4B5B6271613F800287A9B /* ItemListProtocol.swift in Sources */,
 				D8F4B5C92716181400287A9B /* FontManager.swift in Sources */,
+				D8F2435A2719D07900C6EA5F /* BaseViewModel.swift in Sources */,
 				D8F4B5D027161FEA00287A9B /* String+Extension.swift in Sources */,
 				D8F4B5C82716181400287A9B /* PageViewImages.swift in Sources */,
 				D8D61D082716CDD200519796 /* SplashViewController.swift in Sources */,
