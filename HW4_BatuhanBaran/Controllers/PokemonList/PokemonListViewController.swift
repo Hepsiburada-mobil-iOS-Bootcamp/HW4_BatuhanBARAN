@@ -70,8 +70,8 @@ class PokemonListViewController: BaseViewController<PokemonListViewModel> {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.view.alpha = 1
                     self.lottieView.stop()
-                    self.mainComponent.reloadTableView()
                 }
+                self.mainComponent.reloadTableView()
             }
         }
     }
