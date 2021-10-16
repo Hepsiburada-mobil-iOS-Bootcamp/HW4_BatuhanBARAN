@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "DefaultNetworkOperationPackage",
+        "repositoryURL": "https://github.com/batuhanbaran/DefaultNetworkOperationPackage",
+        "state": {
+          "branch": "main",
+          "revision": "536e61ec6a98d854b3372e2917e8d87710297020",
+          "version": null
+        }
+      },
+      {
         "package": "Kingfisher",
         "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
         "state": {

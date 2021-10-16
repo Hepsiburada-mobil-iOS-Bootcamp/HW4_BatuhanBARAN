@@ -8,11 +8,6 @@
 import Foundation
 import DefaultNetworkOperationPackage
 
-enum APIPaths: String {
-    case baseUrl = "https://pokeapi.co/api/v2/"
-    case endPoint = "pokemon"
-}
-
 class PokemonListManager: PokemonListProtocol {
     
     typealias PokemonListResult = Result<PokemonResult, ErrorResponse>
@@ -20,17 +15,22 @@ class PokemonListManager: PokemonListProtocol {
     static let shared = PokemonListManager()
     
     func fetchPokemons(offset: Int, limit: Int, completion: @escaping (PokemonListResult) -> Void) {
-        guard let url = URL(string: APIPaths.baseUrl.rawValue + APIPaths.endPoint.rawValue + "?limit=\(limit)&offset=\(offset)") else { return }
         
-        let urlRequest = URLRequest(url: url)
-        
-        APIManager.shared.executeRequest(urlRequest: urlRequest) { (result: PokemonListResult) in
-            switch result {
-            case .success(let response):
-                completion(.success(response))
-            case .failure(let error):
-                completion(.failure(error))
+        do {
+            let urlRequest = try PokemonListApiServiceProvider(limit: limit, offset: offset).returnUrlRequest()
+            
+            APIManager.shared.executeRequest(urlRequest: urlRequest) { (result: PokemonListResult) in
+                switch result {
+                case .success(let response):
+                    completion(.success(response))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
             }
+            
+        } catch let error {
+            print("error : \(error)")
         }
+
     }
 }
