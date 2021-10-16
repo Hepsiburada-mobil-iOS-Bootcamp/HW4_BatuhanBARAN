@@ -16,16 +16,20 @@ class PokemonSpritesManager: PokemonSpritesProtocol {
     static let shared = PokemonListManager()
     
     func fetchPokemonSprites(url: String, completion: @escaping (Sprites?) -> Void) {
-        guard let url = URL(string: url) else { return }
-        let urlRequest = URLRequest(url: url)
-        
-        APIManager.shared.executeRequest(urlRequest: urlRequest) { (result: PokemonSpriteResult) in
-            switch result {
-            case .success(let response):
-                completion(response)
-            case .failure(let error):
-                print(error)
+        do {
+            let urlRequest = try PokemonDetailServiceProvider(pokemonUrl: url).returnUrlRequest()
+            
+            APIManager.shared.executeRequest(urlRequest: urlRequest) { (result: PokemonSpriteResult) in
+                switch result {
+                case .success(let response):
+                    completion(response)
+                case .failure(let error):
+                    print(error)
+                }
             }
+            
+        } catch {
+            print("error")
         }
     }
 }
