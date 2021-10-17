@@ -11,7 +11,6 @@ class BaseViewController<V>: UIViewController {
     
     var viewModel: V!
     var lottieName: String = ""
-    
     var lottieView: LottieView!
     
     convenience init(viewModel: V, lottieName: String) {

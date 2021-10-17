@@ -41,7 +41,7 @@ class SplashViewController: UIViewController {
 }
 
 extension SplashViewController: LottieViewOutputDelegate {
-    func navigateToPokemonList() {
+    func navigateToMainView() {
         var pokemonListVC = BaseBuilder<PokemonListViewController>().build(with: .fullScreen)
         let manager = PokemonListManager()
         pokemonListVC = PokemonListViewController(viewModel: PokemonListViewModel(manager: manager), lottieName: "loading")

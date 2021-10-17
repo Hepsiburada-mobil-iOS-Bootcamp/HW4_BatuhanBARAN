@@ -164,7 +164,6 @@
 		D8254B2D2714BD310039FB54 = {
 			isa = PBXGroup;
 			children = (
-				D842855A271B187600884455 /* Packages */,
 				D8254B382714BD320039FB54 /* HW4_BatuhanBaran */,
 				D8254B4F2714BD330039FB54 /* HW4_BatuhanBaranTests */,
 				D8254B592714BD330039FB54 /* HW4_BatuhanBaranUITests */,
@@ -216,13 +215,6 @@
 				D8254B5C2714BD330039FB54 /* HW4_BatuhanBaranUITestsLaunchTests.swift */,
 			);
 			path = HW4_BatuhanBaranUITests;
-			sourceTree = "<group>";
-		};
-		D842855A271B187600884455 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Packages;
 			sourceTree = "<group>";
 		};
 		D842855F271B195500884455 /* Network */ = {
